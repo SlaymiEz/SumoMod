@@ -5,7 +5,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 
 @Mod(modid = "sumomod", useMetadata=true)
-public class ExampleMod {
+public class SumoMod {
     @Mod.EventHandler
     public void init(FMLInitializationEvent event) {
         System.out.println("Dirt: " + Blocks.dirt.getUnlocalizedName());
