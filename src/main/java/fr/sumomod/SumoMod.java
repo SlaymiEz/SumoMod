@@ -77,8 +77,10 @@ public class SumoMod {
 
     public static void buildFences(){
         EnumFacing facing = mc.thePlayer.getHorizontalFacing();
-        for (int i = 0; i < 10; i++) {
-            buildBlock(mc.thePlayer.posX, mc.thePlayer.posY+i, mc.thePlayer.posZ, facing);
+        for (int i = 0; i < 4; i++) { // The number after < is the Y level of the wall
+            if (i == 1){} else { // Allows you to hit the player by skipping the second layer
+                buildBlock(mc.thePlayer.posX, mc.thePlayer.posY + i, mc.thePlayer.posZ, facing);
+            }
         }
     }
 }
