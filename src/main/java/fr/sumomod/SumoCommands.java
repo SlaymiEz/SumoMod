@@ -5,8 +5,10 @@ import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.EnumChatFormatting;
 
 public class SumoCommands extends CommandBase {
+    public String prefix = EnumChatFormatting.AQUA + "[SumoHelper] " + EnumChatFormatting.WHITE;
     @Override
     public String getCommandName() {
         return "fences";
@@ -36,6 +38,6 @@ public class SumoCommands extends CommandBase {
         return true;
     }
     private void chatLog(String str){
-        Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(str));
+        Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(prefix + str));
     }
 }

@@ -2,13 +2,19 @@ package fr.sumomod;
 
 import net.minecraft.block.BlockStainedGlass;
 import net.minecraft.client.Minecraft;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.event.ClickEvent;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.EnumDyeColor;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.client.ClientCommandHandler;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -28,12 +34,30 @@ public class SumoMod {
 
     @SubscribeEvent
     public void onTick(TickEvent.ClientTickEvent e){
-        if (Keyboard.isKeyDown(Keyboard.KEY_G)) {
+        if (Keyboard.isKeyDown(Keyboard.KEY_G) && cd == 0) {
             ClientCommandHandler.instance.executeCommand(mc.thePlayer, "/fences load");
             cd = 1;
         }
         if (Keyboard.isKeyDown(Keyboard.KEY_R)){
             ClientCommandHandler.instance.executeCommand(mc.thePlayer, "/fences reset");
+        }
+    }
+    @SubscribeEvent
+    public void onPlayerTick(TickEvent.PlayerTickEvent event){
+        if (event.phase == TickEvent.Phase.START){
+            if (event.player != null && event.player instanceof EntityPlayer){
+                EntityPlayer player = event.player;
+            }
+        }
+    }
+    @SubscribeEvent
+    public void onRightClickItem(PlayerInteractEvent event){
+        if (event.action == PlayerInteractEvent.Action.RIGHT_CLICK_AIR || event.action == PlayerInteractEvent.Action.RIGHT_CLICK_BLOCK){
+            EntityPlayer player = event.entityPlayer;
+            ItemStack itemStack = player.getHeldItem();
+            if (itemStack != null && itemStack.getItem() == Items.paper){
+                ClientCommandHandler.instance.executeCommand(mc.thePlayer, "/fences reset");
+            }
         }
     }
     public static void buildBlock(double posX, double posY, double posZ, EnumFacing facing){
